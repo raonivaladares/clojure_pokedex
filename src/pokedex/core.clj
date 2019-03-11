@@ -39,13 +39,15 @@
 (def johto
   (region "Johto" chikorita bayleef))
 
+(defn pokedex-entry
+  [number pokemon]
+  {(keyword (str number)) pokemon})
+
 (defn pokedex
   [region]
   (into {}
         (map-indexed
-         (fn
-           [index pokemon]
-           {(keyword (str (inc index))) pokemon})
+         #(pokedex-entry (inc %) %2)
          (:pokemon region))))
 
 (def johto-pokedex
