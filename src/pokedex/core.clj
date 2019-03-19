@@ -1,5 +1,5 @@
 (ns pokedex.core
-    (:gen-class))
+  (:gen-class))
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -44,11 +44,10 @@
   {(keyword (str number)) pokemon})
 
 (defn pokedex
-  [region]
+  [& regions]
   (into {}
-        (map-indexed
-         #(pokedex-entry (inc %) %2)
-         (:pokemon region))))
+        (let [everyPokemon (flatten (map :pokemon regions))]
+          (map-indexed #(pokedex-entry (inc %) %2) everyPokemon))))
 
 (def johto-pokedex
   (pokedex johto))
